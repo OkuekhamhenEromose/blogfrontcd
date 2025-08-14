@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react';  
 import './Auth.css';
 
 const RegisterForm = ({ onSubmit, isSubmitting }) => {
@@ -7,7 +7,8 @@ const RegisterForm = ({ onSubmit, isSubmitting }) => {
     email: '',
     password: '',
     first_name: '',
-    last_name: ''
+    last_name: '',
+    role: 'user' // default selected value
   });
 
   const handleChange = (e) => {
@@ -36,6 +37,7 @@ const RegisterForm = ({ onSubmit, isSubmitting }) => {
           minLength="3"
         />
       </div>
+
       <div className="form-group">
         <label>Email</label>
         <input
@@ -46,6 +48,7 @@ const RegisterForm = ({ onSubmit, isSubmitting }) => {
           required
         />
       </div>
+
       <div className="form-group">
         <label>First Name</label>
         <input
@@ -55,6 +58,7 @@ const RegisterForm = ({ onSubmit, isSubmitting }) => {
           onChange={handleChange}
         />
       </div>
+
       <div className="form-group">
         <label>Last Name</label>
         <input
@@ -64,6 +68,7 @@ const RegisterForm = ({ onSubmit, isSubmitting }) => {
           onChange={handleChange}
         />
       </div>
+
       <div className="form-group">
         <label>Password</label>
         <input
@@ -75,6 +80,20 @@ const RegisterForm = ({ onSubmit, isSubmitting }) => {
           minLength="6"
         />
       </div>
+
+      {/* ✅ Role selector */}
+      <div className="form-group">
+        <label>Role</label>
+        <select
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+        >
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+
       <button 
         type="submit" 
         className="btn btn-primary"

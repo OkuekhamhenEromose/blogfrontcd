@@ -10,37 +10,35 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (userData) => {
-    setIsSubmitting(true);
-    setError('');
-    
-    try {
-      await register({
-        ...userData,
-        role: 'user' // Default role for new registrations
-      });
-      setSuccess(true);
-      // Redirect to login after 2 seconds
-      setTimeout(() => navigate('/login'), 2000);
-    } catch (err) {
-      // Handle different error response formats
-      if (err.response?.data) {
-        if (typeof err.response.data === 'object') {
-          // Handle field-specific errors
-          const fieldErrors = Object.entries(err.response.data)
-            .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
-            .join('\n');
-          setError(fieldErrors);
-        } else {
-          setError(err.response.data);
+const handleSubmit = async (userData) => {
+  setIsSubmitting(true);
+  setError('');
+  
+  try {
+    await register(userData)
+    setSuccess(true)
+    setTimeout(() => navigate('/login'), 2000);
+  } catch (err) {
+    if (err.response) {
+      // Handle Django REST framework validation errors
+      if (err.response.data && typeof err.response.data === 'object') {
+        const errorMessages = [];
+        for (const [field, errors] of Object.entries(err.response.data)) {
+          errorMessages.push(`${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`);
         }
+        setError(errorMessages.join('\n'));
       } else {
-        setError('Registration failed. Please try again.');
+        setError(err.response.data.detail || 'Registration failed. Please try again.');
       }
-    } finally {
-      setIsSubmitting(false);
+    } else if (err.request) {
+      setError('No response from server. Please check your connection.');
+    } else {
+      setError('An unexpected error occurred. Please try again.');
     }
-  };
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="auth-page">
