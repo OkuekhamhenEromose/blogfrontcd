@@ -1,14 +1,24 @@
-import { useState } from 'react';
-import './CommentForm.css';
+import { useState, useEffect } from "react";
+import "./CommentForm.css";
 
-const CommentForm = ({ onSubmit, isSubmitting }) => {
-  const [comment, setComment] = useState('');
+const CommentForm = ({ 
+  onSubmit, 
+  isSubmitting, 
+  initialValue = "", 
+  isEditing = false, 
+  onCancel 
+}) => {
+  const [comment, setComment] = useState(initialValue);
+
+  useEffect(() => {
+    setComment(initialValue);
+  }, [initialValue]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (comment.trim()) {
       onSubmit(comment);
-      setComment('');
+      if (!isEditing) setComment("");
     }
   };
 
@@ -21,13 +31,26 @@ const CommentForm = ({ onSubmit, isSubmitting }) => {
         required
         rows="3"
       />
-      <button 
-        type="submit" 
-        className="btn btn-primary"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Posting...' : 'Post Comment'}
-      </button>
+      <div className="form-actions">
+        <button 
+          type="submit" 
+          className="btn btn-primary"
+          disabled={isSubmitting}
+        >
+          {isSubmitting 
+            ? (isEditing ? "Saving..." : "Posting...") 
+            : (isEditing ? "Save Changes" : "Post Comment")}
+        </button>
+        {isEditing && (
+          <button 
+            type="button" 
+            className="btn btn-secondary" 
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 };

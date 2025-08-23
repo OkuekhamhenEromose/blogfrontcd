@@ -1,75 +1,34 @@
 import api from "./axios";
 
-// REGISTER
 export const register = async (userData) => {
-  try {
-    const response = await api.post("register/", userData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Registration error:", error.response?.data || error.message);
-    throw error;
-  }
+  const response = await api.post("register/", userData);
+  return response.data;
 };
 
-// LOGIN
 export const login = async (credentials) => {
-  try {
-    const response = await api.post(
-      "login/",
-      {
-        email: credentials.email,
-        password: credentials.password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  const response = await api.post("login/", {
+    username: credentials.username || credentials.email,
+    password: credentials.password,
+  });
 
-    if (response.data.access) {
-      localStorage.setItem("access_token", response.data.access);
-      localStorage.setItem("refresh_token", response.data.refresh);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-    }
-    return response.data;
-  } catch (error) {
-    // Enhanced error handling
-    const errorMessage =
-      error.response?.data?.detail ||
-      error.response?.data?.errors ||
-      "Login failed. Please try again.";
-    throw new Error(errorMessage);
+  const { access, refresh, user } = response.data;
+  if (access) {
+    localStorage.setItem("access_token", access);
+    localStorage.setItem("refresh_token", refresh);
+    localStorage.setItem("user", JSON.stringify(user || {}));
   }
+  return { access, refresh, user };
 };
 
-// LOGOUT
 export const logout = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
-  localStorage.removeItem("user");
+  localStorage.clear();
 };
 
-// GET CURRENT USER
 export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
-};
-
-// REFRESH TOKEN
-export const refreshToken = async () => {
-  const refresh = localStorage.getItem("refresh_token");
-  if (!refresh) return null;
-
   try {
-    const response = await api.post("token/refresh/", { refresh });
-    localStorage.setItem("access_token", response.data.access);
-    return response.data.access;
-  } catch (error) {
-    logout();
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  } catch {
     return null;
   }
 };

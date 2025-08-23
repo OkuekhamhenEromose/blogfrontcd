@@ -1,92 +1,124 @@
-.navbar {
-  background-color: var(--dark-color);
-  color: white;
-  padding: 1rem 0;
-  position: sticky;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+:root {
+  --primary-color: #0a0d14;
+  --secondary-color: #f97316;
+  --white: #ffffff;
+  --max-width: 1200px;
+  --header-font: "Poppins", sans-serif;
+}
+
+.nav {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-.nav-container {
+.nav:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.nav__bar {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 1.2rem 1.5rem;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
 }
 
-.logo {
+.nav__logo a {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+  font-weight: 700;
+  color: var(--white);
+  font-family: var(--header-font);
   text-decoration: none;
-  transition: opacity 0.3s;
+  transition: color 0.3s ease;
 }
 
-.logo:hover {
-  opacity: 0.9;
+.nav__logo a:hover {
+  color: var(--secondary-color);
 }
 
-.nav-links {
+.nav__links {
+  list-style: none;
   display: flex;
-  gap: 1.5rem;
   align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
-.nav-link {
-  color: white;
-  text-decoration: none;
+.link a {
   font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: all 0.3s;
+  color: var(--white);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
 }
 
-.nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.link a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--secondary-color);
+  transition: width 0.3s ease;
 }
 
-.nav-link.btn-logout {
+.link a:hover::after {
+  width: 100%;
+}
+
+.link a:hover {
+  color: var(--secondary-color);
+}
+
+.logout-btn {
   background: none;
   border: none;
+  color: var(--white);
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  font-size: 1rem;
   font-family: inherit;
-  font-size: inherit;
 }
 
-/* Active link styling */
-.active-link {
-  background-color: var(--primary-color);
+.logout-btn:hover {
+  color: var(--secondary-color);
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
-  .nav-container {
-    padding: 0 1rem;
-    flex-direction: column;
+  .nav__bar {
+    padding: 1rem 1rem;
+  }
+
+  .nav__links {
     gap: 1rem;
   }
 
-  .nav-links {
-    width: 100%;
-    justify-content: space-around;
-    gap: 0.5rem;
-  }
-
-  .nav-link {
-    padding: 0.5rem;
-    font-size: 0.9rem;
+  .nav__links li:last-child {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .nav-links {
-    flex-wrap: wrap;
+  .nav__logo a {
+    font-size: 1.25rem;
   }
   
-  .logo {
-    font-size: 1.3rem;
+  .nav__links {
+    display: none;
   }
 }

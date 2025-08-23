@@ -1,72 +1,68 @@
-import axios from 'axios';
+import axios from "axios";
 
-// Create axios instance with base URL from environment variables
+// axios.js
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true  // Important for session/cookie based auth if needed
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/",
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
 });
 
-// Request interceptor for adding auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Normalize the url we’re calling
+    const base = config.baseURL || "";
+    const url = new URL(config.url, base).toString();
+
+    // ✅ Do NOT attach Authorization to login or token refresh
+    const skipAuth = url.endsWith("/login/") || url.endsWith("/token/refresh/");
+    if (!skipAuth) {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response interceptor for handling token refresh
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    
-    // Only attempt refresh on 401 errors and if not already retrying
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      
-      try {
-        const newToken = await refreshToken();
-        if (newToken) {
-          originalRequest.headers.Authorization = `Bearer ${newToken}`;
-          return api(originalRequest);
-        }
-      } catch (refreshError) {
-        console.error('Token refresh failed:', refreshError);
-        // Optional: Redirect to login or show session expired message
-      }
-    }
-    
-    return Promise.reject(error);
-  }
-);
 
-// Separate refresh token function for interceptors
+// Centralized refresh logic
 async function refreshToken() {
-  const refreshToken = localStorage.getItem('refresh_token');
-  if (!refreshToken) return null;
+  const refresh = localStorage.getItem("refresh_token");
+  if (!refresh) return null;
 
   try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/'}token/refresh/`,
-      { refresh: refreshToken }
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/"}token/refresh/`,
+      { refresh }
     );
-    localStorage.setItem('access_token', response.data.access);
-    return response.data.access;
-  } catch (error) {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user');
+    localStorage.setItem("access_token", data.access);
+    if (data.refresh) localStorage.setItem("refresh_token", data.refresh);
+    return data.access;
+  } catch (err) {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
     return null;
   }
 }
+
+// Response interceptor → refresh on 401
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const newToken = await refreshToken();
+      if (newToken) {
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return api(originalRequest);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

@@ -1,4 +1,6 @@
-/* Base Styles */
+/* index.css - Scrolling Fix Version */
+
+/* CSS Variables */
 :root {
   --primary-color: #3498db;
   --secondary-color: #2ecc71;
@@ -8,58 +10,196 @@
   --success-color: #27ae60;
 }
 
+/* CRITICAL: Base Reset for Scrolling */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto; /* Ensure vertical scrolling */
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  overflow-x: hidden;
+  overflow-y: auto; /* Ensure vertical scrolling */
+  height: auto; /* Remove fixed height */
+  min-height: 100vh;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  height: auto; /* Remove fixed height */
+  min-height: 100vh;
+}
+
+/* App Container - CRITICAL FIX */
+.app-container {
+  min-height: 100vh;
+  height: auto; /* Allow content to expand */
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: visible; /* Allow content to overflow vertically */
+}
+
+/* Home Container - SCROLLING FIX */
+.home-container {
+  width: 100%;
+  height: auto; /* Remove fixed height */
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: visible; /* Critical: allow vertical overflow */
+  position: relative;
+}
+
+/* Navbar - Fixed but not interfering with scroll */
+.navbar {
+  background-color: var(--dark-color);
+  color: white;
+  padding: 15px 0;
+  position: relative;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* Home page navbar - NO FIXED POSITIONING issues */
+.home-container .navbar {
+  position: absolute; /* Changed from fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(44, 62, 80, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  /* margin: 0 auto;
+  padding: 0 1rem; */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Main Content - CRITICAL for scrolling */
+.main-content {
+  flex: 1;
+  width: 100%;
+  height: auto; /* Remove fixed height */
+  min-height: auto; /* Remove min-height */
+  overflow: visible; /* Allow content to show */
+}
+
+/* Normal pages */
+.app-container:not(.home-page) .main-content {
+  padding: 20px 0;
+  margin-top: 0;
+}
+
+/* Home page - NO padding conflicts */
+.home-container .main-content {
+  padding: 0;
+  margin: 0;
+  height: auto; /* Critical */
+  min-height: auto; /* Critical */
+}
+
+/* Container utility */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+/* Links */
 a {
   text-decoration: none;
   color: var(--primary-color);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
+/* Buttons */
 .btn {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
   transition: all 0.3s ease;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .btn-primary {
   background-color: var(--primary-color);
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary:hover {
   background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
   background-color: var(--secondary-color);
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary:hover {
   background-color: #27ae60;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Messages */
 .error-message {
   color: var(--danger-color);
   margin-bottom: 15px;
@@ -76,80 +216,24 @@ a {
   border-radius: 5px;
 }
 
-/* Layout Styles */
-.layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  padding: 20px 0;
-}
-
-/* Navbar Styles */
-.navbar {
-  background-color: var(--dark-color);
-  color: white;
-  padding: 15px 0;
-}
-
-.navbar .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Footer Styles */
+/* Footer - Allow natural positioning */
 footer {
   background-color: var(--dark-color);
   color: white;
   text-align: center;
-  padding: 20px 0;
-  margin-top: 40px;
+  padding: 40px 0;
+  margin-top: 0;
+  position: relative;
+  z-index: 2;
 }
 
-/* Home Page Styles */
-.home-page {
-  text-align: center;
-}
-
-.cta-buttons {
-  margin: 30px 0;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-/* Auth Page Styles */
+/* Auth Pages */
 .auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
+  padding: 2rem 0;
 }
 
 .auth-container {
@@ -171,11 +255,73 @@ footer {
   text-align: center;
 }
 
-/* Blog Dashboard Styles */
-.blog-dashboard {
-  padding: 20px 0;
+/* RESPONSIVE - Mobile fixes for scrolling */
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 1rem;
+  }
+  
+  .nav-links {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  /* CRITICAL: Remove fixed positioning on mobile */
+  .home-container .navbar {
+    position: relative;
+    background: var(--dark-color);
+    backdrop-filter: none;
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+  
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  
+  /* Ensure body can scroll on mobile */
+  body {
+    height: auto;
+    overflow-y: auto;
+  }
+  
+  .home-container {
+    height: auto;
+    overflow-y: visible;
+  }
 }
 
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .navbar .container {
+    padding: 12px 0.75rem;
+  }
+}
+
+/* Layout Utilities */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: auto; /* Allow expansion */
+}
+
+/* Blog specific */
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -189,7 +335,7 @@ footer {
   margin: 30px 0;
 }
 
-/* Single Post Styles */
+/* Single post */
 .single-post {
   max-width: 800px;
   margin: 0 auto;
@@ -200,56 +346,11 @@ footer {
   margin-top: 40px;
 }
 
-/* Admin Dashboard Styles */
+/* Admin dashboard */
 .admin-dashboard {
   padding: 20px;
 }
 
 .admin-posts {
   margin-top: 30px;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .navbar .container {
-    flex-direction: column;
-  }
-  
-  .nav-links {
-    margin-top: 15px;
-  }
-  
-  .posts-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .cta-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
-.loading-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 1.5rem;
-  color: var(--primary-color);
-}
-
-.loading-spinner::after {
-  content: "";
-  width: 40px;
-  height: 40px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid var(--primary-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: 10px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }

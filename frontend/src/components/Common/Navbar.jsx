@@ -1,27 +1,39 @@
-import { Link } from 'react-router-dom';
-import './Navbar.css';
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import "./Navbar.css";
 
-const Navbar = ({ user, logout }) => {
+const Navbar = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
-    <nav className="navbar">
-      <div className="container">
-        <Link to="/" className="logo">BlogApp</Link>
-        <div className="nav-links">
-          {user ? (
-            <>
-              {user.is_blog_admin && (
-                <Link to="/admin" className="nav-link">Admin Dashboard</Link>
-              )}
-              <Link to="/blog" className="nav-link">Dashboard</Link>
-              <button onClick={logout} className="nav-link">Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="nav-link">Login</Link>
-              <Link to="/register" className="nav-link">Register</Link>
-            </>
-          )}
+    <nav className="nav">
+      <div className="nav__bar">
+        <div className="nav__logo">
+          <Link to="/">CHBlog.</Link>
         </div>
+        <ul className="nav__links">
+          <li className="link">
+            <Link to="/register">Dashboard</Link>
+          </li>
+
+          {!isAuthenticated ? (
+            <li className="link">
+              <Link to="/login">Login</Link>
+            </li>
+          ) : (
+            <li className="link">
+              <button onClick={handleLogout} className="logout-btn">
+                Logout
+              </button>
+            </li>
+          )}
+        </ul>
       </div>
     </nav>
   );

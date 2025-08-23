@@ -1,97 +1,202 @@
-.auth-page {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #154D71;
+}
+
+.wrapper {
+  /* background: #ececec; */
+  padding: 0 20px;
+}
+
+.main {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
-  padding: 20px;
+  min-height: 100vh;
 }
 
-.auth-container {
-  background: white;
-  padding: 30px;
+.row {
+  width: 900px;
+  height: 550px;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
+  background: #fff;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 
-.auth-container h2 {
-  margin-bottom: 20px;
+/* Left Side */
+.side-image {
+  flex: 1;
+  background-image: url("../../assets/blog01.jpg");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+.side-image img {
+  width: 35px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text p {
+  color: #fff;
+  font-size: 20px;
+}
+
+i {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+/* Right Side Form */
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-box {
+  width: 330px;
+}
+
+.input-box header {
+  font-weight: 700;
   text-align: center;
-  color: var(--dark-color);
+  margin-bottom: 45px;
+  font-size: 22px;
 }
 
-.auth-form {
+.input-field {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  position: relative;
+  margin-bottom: 25px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.form-group label {
-  font-weight: 500;
-  color: var(--dark-color);
-}
-
-.form-group input {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.form-group input:focus {
+.input {
+  height: 45px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  color: #40414a;
+  background: transparent;
 }
 
-.btn-primary {
-  margin-top: 10px;
-  width: 100%;
+.input-box .input-field label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  color: #666;
 }
 
-.btn-primary:disabled {
-  background-color: #95a5a6;
-  cursor: not-allowed;
+.input-field input:focus ~ label,
+.input-field input:valid ~ label {
+  top: -12px;
+  font-size: 13px;
+  color: #5d5076;
 }
 
-.auth-link {
-  margin-top: 20px;
-  text-align: center;
-  color: var(--dark-color);
+.input-field .input:focus,
+.input-field .input:valid {
+  border-bottom: 1px solid #743ae1;
 }
 
-.auth-link a {
-  color: var(--primary-color);
-  font-weight: 500;
-}
-
-.error-message {
-  color: var(--danger-color);
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #fadbd8;
+.submit {
+  border: none;
+  outline: none;
+  height: 45px;
+  background: #ececec;
   border-radius: 5px;
-  white-space: pre-line;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: rgba(37, 95, 156, 0.937);
+  color: #fff;
+}
+
+.signin {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 25px;
+}
+
+.signin a {
+  text-decoration: none;
+  font-weight: 700;
+  color: #000;
+  transition: 0.3s;
+}
+
+.signin a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+/* Error / Success */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .success-message {
-  color: var(--success-color);
+  color: green;
+  font-size: 0.9rem;
   margin-bottom: 15px;
-  padding: 10px;
-  background-color: #d5f5e3;
-  border-radius: 5px;
   text-align: center;
 }
 
-@media (max-width: 480px) {
-  .auth-container {
-    padding: 20px;
+/* Responsive */
+@media only screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .side-image {
+    height: 200px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .side-image img {
+    top: 20px;
+    left: 47%;
+  }
+
+  .text {
+    top: 70%;
+    text-align: center;
+  }
+
+  .text p, i {
+    font-size: 16px;
   }
 }

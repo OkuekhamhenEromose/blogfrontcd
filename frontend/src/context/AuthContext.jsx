@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { getCurrentUser, logout as apiLogout } from '../api/auth';
 
 export const AuthContext = createContext();
@@ -9,19 +9,26 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const user = getCurrentUser();
-      if (user) {
-        setUser(user);
-        setIsAuthenticated(true);
-      }
-      setIsLoading(false);
-    };
-    checkAuth();
+    const storedUser = getCurrentUser();
+    if (storedUser) {
+      setUser(storedUser);
+      setIsAuthenticated(true);
+    }
+    setIsLoading(false);
   }, []);
 
   const login = (userData) => {
-    setUser(userData.user);
+    const finalUser = userData.user || userData;
+    
+    if (userData.access) {
+      localStorage.setItem('access_token', userData.access);
+    }
+    if (userData.refresh) {
+      localStorage.setItem('refresh_token', userData.refresh);
+    }
+
+    localStorage.setItem('user', JSON.stringify(finalUser));
+    setUser(finalUser);
     setIsAuthenticated(true);
   };
 
@@ -42,4 +49,13 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+// Create and export the useAuth hook
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };

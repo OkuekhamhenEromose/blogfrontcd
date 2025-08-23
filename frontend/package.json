@@ -14,9 +14,13 @@
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.540.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.0"
+    "react-router-dom": "^7.8.0",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
