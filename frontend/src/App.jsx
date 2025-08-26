@@ -1,10 +1,13 @@
-import {
+import { 
   BrowserRouter as Router,
   Routes,
   Route,
   useParams,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import { AuthProvider } from "./context/AuthContext";
 import Layout from "./components/Common/Layout";
 import Home from "./pages/Home";
@@ -21,6 +24,7 @@ import EditPost from "./pages/EditPost";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/Common/PrivateRoute";
 import { getCategories, getPost, createPost, updatePost } from "./api/blog";
+import "./theme.css";
 
 // ✅ Create Wrapper
 function CreatePostWrapper() {
@@ -28,13 +32,28 @@ function CreatePostWrapper() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getCategories().then(setCategories);
+    getCategories()
+      .then(setCategories)
+      .catch(error => console.error("Error fetching categories:", error));
+  }, []);
+
+  useEffect(() => {
+    // Initialize theme from localStorage or system preference
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", initialTheme);
   }, []);
 
   const handleBlogSubmit = async (formData) => {
     setLoading(true);
-    await createPost(formData);
-    setLoading(false);
+    try {
+      await createPost(formData);
+    } catch (error) {
+      console.error("Error creating post:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,17 +71,44 @@ function EditPostWrapper() {
   const [categories, setCategories] = useState([]);
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    getCategories().then(setCategories);
-    getPost(id).then(setPostData);
+    const fetchData = async () => {
+      try {
+        const [categoriesData, postData] = await Promise.all([
+          getCategories(),
+          getPost(id),
+        ]);
+        setCategories(categoriesData);
+        setPostData(postData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setInitialLoading(false);
+      }
+    };
+    fetchData();
   }, [id]);
 
   const handleBlogSubmit = async (formData) => {
     setLoading(true);
-    await updatePost(id, formData);
-    setLoading(false);
+    try {
+      await updatePost(id, formData);
+    } catch (error) {
+      console.error("Error updating post:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (initialLoading) {
+    return (
+      <Layout>
+        <div className="loading">Loading post data...</div>
+      </Layout>
+    );
+  }
 
   return (
     <BlogForm
@@ -75,14 +121,25 @@ function EditPostWrapper() {
 }
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+      once: true,
+    });
+    AOS.refresh();
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          {/* ✅ Home page WITHOUT Layout (so no footer & no duplicate navbar) */}
+          {/* ✅ Home page WITHOUT Layout */}
           <Route path="/" element={<Home />} />
 
-          {/* ✅ Auth pages inside Layout */}
+          {/* ✅ Auth pages */}
           <Route
             path="/login"
             element={
@@ -100,7 +157,7 @@ function App() {
             }
           />
 
-          {/* ✅ Blog pages inside Layout */}
+          {/* ✅ Blog pages */}
           <Route
             path="/blog"
             element={
@@ -136,7 +193,7 @@ function App() {
             element={
               <Layout>
                 <PrivateRoute>
-                  <EditPost />
+                  <EditPostWrapper />
                 </PrivateRoute>
               </Layout>
             }

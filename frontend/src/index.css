@@ -1,6 +1,4 @@
-/* index.css - Scrolling Fix Version */
 
-/* CSS Variables */
 :root {
   --primary-color: #3498db;
   --secondary-color: #2ecc71;
@@ -8,76 +6,96 @@
   --light-color: #ecf0f1;
   --danger-color: #e74c3c;
   --success-color: #27ae60;
+  
+  /* Theme Variables */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #8e9aaf;
+  --accent-color: #3498db;
+  --accent-hover: #2980b9;
+  --card-bg: #ffffff;
+  --card-border: #e9ecef;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --border-color: #dee2e6;
+  --input-bg: #ffffff;
+  --input-text: #495057;
 }
 
-/* CRITICAL: Base Reset for Scrolling */
+[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --text-primary: #e9ecef;
+  --text-secondary: #adb5bd;
+  --text-muted: #8e9aaf;
+  --accent-color: #44a6f7;
+  --accent-hover: #3498db;
+  --card-bg: #1e1e1e;
+  --card-border: #2d2d2d;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+  --border-color: #444;
+  --input-bg: #2d2d2d;
+  --input-text: #e9ecef;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #f9f9f9;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   scroll-behavior: smooth;
   overflow-x: hidden;
-  overflow-y: auto; /* Ensure vertical scrolling */
+  overflow-y: auto; 
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #f9f9f9;
+  background-color: var(--bg-primary);
   overflow-x: hidden;
-  overflow-y: auto; /* Ensure vertical scrolling */
-  height: auto; /* Remove fixed height */
+  overflow-y: auto; 
+  height: auto; 
   min-height: 100vh;
 }
 
 #root {
-  margin: 0;
-  padding: 0;
-  height: auto; /* Remove fixed height */
+  height: auto; 
   min-height: 100vh;
 }
 
-/* App Container - CRITICAL FIX */
-.app-container {
-  min-height: 100vh;
-  height: auto; /* Allow content to expand */
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: visible; /* Allow content to overflow vertically */
-}
-
-/* Home Container - SCROLLING FIX */
 .home-container {
   width: 100%;
-  height: auto; /* Remove fixed height */
+  height: auto; 
   min-height: 100vh;
   overflow-x: hidden;
-  overflow-y: visible; /* Critical: allow vertical overflow */
+  overflow-y: visible; 
   position: relative;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Navbar - Fixed but not interfering with scroll */
 .navbar {
-  background-color: var(--dark-color);
-  color: white;
+  color: var(--text-primary);
   padding: 15px 0;
   position: relative;
   z-index: 1000;
   transition: all 0.3s ease;
   width: 100%;
+  background-color: var(--bg-secondary);
 }
 
-/* Home page navbar - NO FIXED POSITIONING issues */
 .home-container .navbar {
-  position: absolute; /* Changed from fixed */
+  position: absolute; 
   top: 0;
   left: 0;
   width: 100%;
@@ -85,7 +103,7 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px var(--shadow);
 }
 
 .navbar .container {
@@ -93,14 +111,12 @@ body {
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
-  /* margin: 0 auto;
-  padding: 0 1rem; */
 }
 
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
@@ -111,7 +127,7 @@ body {
 }
 
 .nav-link {
-  color: white;
+  color: var(--text-primary);
   padding: 8px 16px;
   border-radius: 5px;
   transition: all 0.3s ease;
@@ -123,111 +139,119 @@ body {
   transform: translateY(-1px);
 }
 
-/* Main Content - CRITICAL for scrolling */
-.main-content {
-  flex: 1;
-  width: 100%;
-  height: auto; /* Remove fixed height */
-  min-height: auto; /* Remove min-height */
-  overflow: visible; /* Allow content to show */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+  box-shadow: 0 2px 5px var(--shadow);
+  transition: all 0.2s;
 }
 
-/* Normal pages */
+.theme-toggle:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-primary);
+  transform: scale(1.1);
+}
+
 .app-container:not(.home-page) .main-content {
   padding: 20px 0;
   margin-top: 0;
 }
 
-/* Home page - NO padding conflicts */
 .home-container .main-content {
   padding: 0;
   margin: 0;
-  height: auto; /* Critical */
-  min-height: auto; /* Critical */
+  height: auto; 
+  min-height: auto; 
 }
 
-/* Container utility */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  max-width: 100%;
+  margin: 0 ;
+  padding: 0 ;
   width: 100%;
 }
 
-/* Links */
 a {
   text-decoration: none;
-  color: var(--primary-color);
+  color: var(--accent-color);
 }
 
-/* Buttons */
 .btn {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.3s ease;
   text-align: center;
   line-height: 1.4;
+  margin-top: 0.25rem;
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--accent-color);
+  color: var(--bg-primary);
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px var(--shadow-hover);
 }
 
 .btn-secondary {
   background-color: var(--secondary-color);
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--bg-primary);
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .btn-secondary:hover {
   background-color: #27ae60;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px var(--shadow-hover);
 }
 
-/* Messages */
 .error-message {
   color: var(--danger-color);
   margin-bottom: 15px;
   padding: 10px;
-  background-color: #fadbd8;
+  background-color: rgba(231, 76, 60, 0.1);
   border-radius: 5px;
+  border: 1px solid rgba(231, 76, 60, 0.2);
 }
 
 .success-message {
   color: var(--success-color);
   margin-bottom: 15px;
   padding: 10px;
-  background-color: #d5f5e3;
+  background-color: rgba(46, 204, 113, 0.1);
   border-radius: 5px;
+  border: 1px solid rgba(46, 204, 113, 0.2);
 }
 
-/* Footer - Allow natural positioning */
 footer {
-  background-color: var(--dark-color);
-  color: white;
+  color: var(--text-primary);
   text-align: center;
   padding: 40px 0;
   margin-top: 0;
   position: relative;
   z-index: 2;
+  background-color: var(--bg-secondary);
 }
 
-/* Auth Pages */
 .auth-page {
   display: flex;
   justify-content: center;
@@ -237,25 +261,27 @@ footer {
 }
 
 .auth-container {
-  background: white;
+  background: var(--card-bg);
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px var(--shadow);
   width: 100%;
   max-width: 500px;
+  border: 1px solid var(--card-border);
 }
 
 .auth-container h2 {
   margin-bottom: 20px;
   text-align: center;
+  color: var(--text-primary);
 }
 
 .auth-link {
   margin-top: 20px;
   text-align: center;
+  color: var(--text-secondary);
 }
 
-/* RESPONSIVE - Mobile fixes for scrolling */
 @media (max-width: 768px) {
   .navbar .container {
     flex-direction: column;
@@ -270,7 +296,6 @@ footer {
     gap: 15px;
   }
   
-  /* CRITICAL: Remove fixed positioning on mobile */
   .home-container .navbar {
     position: relative;
     background: var(--dark-color);
@@ -285,8 +310,7 @@ footer {
     padding: 6px 12px;
     font-size: 14px;
   }
-  
-  /* Ensure body can scroll on mobile */
+
   body {
     height: auto;
     overflow-y: auto;
@@ -313,15 +337,15 @@ footer {
   }
 }
 
-/* Layout Utilities */
 .layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  height: auto; /* Allow expansion */
+  height: auto; 
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Blog specific */
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -333,13 +357,17 @@ footer {
   display: block;
   text-align: center;
   margin: 30px 0;
+  color: var(--accent-color);
 }
 
-/* Single post */
 .single-post {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow);
+  border: 1px solid var(--card-border);
 }
 
 .comments-section {
@@ -349,6 +377,7 @@ footer {
 /* Admin dashboard */
 .admin-dashboard {
   padding: 20px;
+  background-color: var(--bg-primary);
 }
 
 .admin-posts {

@@ -1,93 +1,129 @@
 import { Link } from "react-router-dom";
-import { Truck, Package, Award, Headphones, ShoppingCart, Users, Camera, Gamepad2 } from "lucide-react";
+import {
+  Cpu, Film, Plane, Users, Landmark, Dumbbell, BookOpen
+} from "lucide-react";
 import "./Categories.css";
+import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-// Icon mapping for different category types
-const categoryIcons = {
-  "Free Shipping": Truck,
-  "Always Fresh": Package,
-  "Superior Quality": Award,
-  "Support": Headphones,
-  "Shopping": ShoppingCart,
-  "Community": Users,
-  "Photography": Camera,
-  "Gaming": Gamepad2,
-  // Default fallback
-  default: Package
-};
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-// Color mapping for different categories
-const categoryColors = {
-  "Free Shipping": "#E8B4E3",
-  "Always Fresh": "#D4C5A9", 
-  "Superior Quality": "#A8D8EA",
-  "Support": "#C8D982",
-  // Default colors for other categories
-  default: ["#E8B4E3", "#D4C5A9", "#A8D8EA", "#C8D982"]
-};
+  useEffect(() => {
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false
+    });
 
-const Categories = ({ categories = [] }) => {
-  if (!categories.length) {
-    // Show default categories if none provided
-    const defaultCategories = [
-      { id: 1, name: "Free Shipping", description: "On order over $100" },
-      { id: 2, name: "Always Fresh", description: "Product well package" },
-      { id: 3, name: "Superior Quality", description: "Quality products" },
-      { id: 4, name: "Support", description: "24/7 support" }
-    ];
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await response.json();
+        console.log("Categories data:", data);
+        setCategories(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchCategories();
+  }, []);
+
+  const getCategoryData = (categoryName) => {
+    const name = categoryName.toLowerCase();
+    const categoryMap = {
+      technology: { icon: <Cpu size={32} />, description: "Latest trends in gadgets, AI, and innovation." },
+      tech: { icon: <Cpu size={32} />, description: "Technology and innovation updates." },
+      entertainment: { icon: <Film size={32} />, description: "Movies, music, and everything fun." },
+      travel: { icon: <Plane size={32} />, description: "Guides and tips from around the world." },
+      social: { icon: <Users size={32} />, description: "Culture, lifestyle, and social insights." },
+      politics: { icon: <Landmark size={32} />, description: "Updates on governance and world affairs." },
+      sports: { icon: <Dumbbell size={32} />, description: "Games, fitness, and sporting highlights." },
+      default: { icon: <BookOpen size={32} />, description: "Explore articles in this category." }
+    };
+    return categoryMap[name] || categoryMap.default;
+  };
+
+  if (loading) {
     return (
       <section className="categories-section">
-        <div className="categories-grid">
-          {defaultCategories.map((category, index) => {
-            const IconComponent = categoryIcons[category.name] || categoryIcons.default;
-            const backgroundColor = categoryColors[category.name] || categoryColors.default[index % 4];
-            
-            return (
-              <div key={category.id} className="category-card">
-                <div 
-                  className="category-icon"
-                  style={{ backgroundColor }}
-                >
-                  <IconComponent size={32} color="white" />
-                </div>
-                <h3 className="category-title">{category.name}</h3>
-                <p className="category-description">{category.description}</p>
-              </div>
-            );
-          })}
-        </div>
+        <h2 className="section-title">Categories</h2>
+        <p className="loading">Loading categories...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="categories-section">
+        <h2 className="section-title">Categories</h2>
+        <p className="error">Error: {error}</p>
+      </section>
+    );
+  }
+
+  if (!categories.length) {
+    return (
+      <section className="categories-section">
+        <h2 className="section-title">Categories</h2>
+        <p className="no-data">No categories available.</p>
       </section>
     );
   }
 
   return (
     <section className="categories-section">
-      <div className="categories-grid">
-        {categories.map((category, index) => {
-          const IconComponent = categoryIcons[category.name] || categoryIcons.default;
-          const backgroundColor = categoryColors[category.name] || 
-            categoryColors.default[index % categoryColors.default.length];
-          
-          return (
-            <Link
-              key={category.id}
-              to={`/categories/${category.id}`}
-              className="category-card category-link"
-            >
-              <div 
-                className="category-icon"
-                style={{ backgroundColor }}
+      <div className="container">
+        {/* Header section */}
+        <div className="text-center mb-10 max-w-[600px] mx-auto">
+          <p data-aos="fade-up" className="text-sm text-primary">
+            Explore Our Content Categories
+          </p>
+          <h1 data-aos="fade-up" className="text-3xl font-bold">
+            Categories
+          </h1>
+          <p data-aos="fade-up" className="text-xs text-gray-400">
+            Discover stories from every corner of life. From technology and travel to culture and sports — 
+            explore the topics that inspire, inform, and entertain.
+          </p>
+        </div>
+
+        {/* Categories grid */}
+        <div className="categories-list">
+          {categories.map((category, index) => {
+            const title = category.title || category.name || "Untitled";
+            const data = getCategoryData(title);
+            const aosDelay = (index * 100).toString(); // Stagger animations
+
+            return (
+              <Link
+                key={category.id}
+                to={`/categories/${category.id}`}
+                className="category-item"
+                data-aos="fade-up"
+                data-aos-delay={aosDelay}
               >
-                <IconComponent size={32} color="white" />
-              </div>
-              <h3 className="category-title">{category.name}</h3>
-              {category.description && (
-                <p className="category-description">{category.description}</p>
-              )}
-            </Link>
-          );
-        })}
+                <div className="category-icon" data-aos="zoom-in" data-aos-delay={(index * 100 + 200).toString()}>
+                  {data.icon}
+                </div>
+                <span className="category-title">{title}</span>
+                <p className="category-desc">{data.description}</p>
+              </Link>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );

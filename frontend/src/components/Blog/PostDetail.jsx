@@ -68,6 +68,17 @@ const PostDetail = ({ post, onLike }) => {
 
   return (
     <article className="post-detail">
+      {/* ---------- POST IMAGE ---------- */}
+      {post.image && (
+        <div className="post-image-container">
+          <img 
+            src={post.image} 
+            alt={post.title} 
+            className="post-image"
+          />
+        </div>
+      )}
+      
       {/* ---------- POST HEADER ---------- */}
       <header className="post-header">
         <h1 className="post-title">{post.title}</h1>
@@ -124,44 +135,43 @@ const PostDetail = ({ post, onLike }) => {
         {/* ✅ Single Comment Form for NEW comments */}
         <CommentForm onSubmit={handleAddComment} />
         <ul className="comments-list">
-  {comments.map((c) => (
-    <li key={c.id} className="comment-item">
-      {editingCommentId === c.id ? (
-        // ✅ Show form only for the comment being edited
-        <CommentForm
-          onSubmit={(body) => handleUpdateComment(c.id, body)}
-          initialValue={c.body}
-          isEditing={true}
-          isSubmitting={false}
-          onCancel={() => setEditingCommentId(null)}
-        />
-      ) : (
-        <>
-          <p>
-            <strong>{c.user.username}</strong>: {c.body}
-          </p>
-          {(user?.id === c.user.id || user?.is_blog_admin) && (
-            <div className="comment-actions">
-              <button
-                onClick={() => setEditingCommentId(c.id)}
-                className="btn-edit"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteComment(c.id)}
-                className="btn-delete"
-              >
-                Delete
-              </button>
-            </div>
-          )}
-        </>
-      )}
-    </li>
-  ))}
-</ul>
-
+          {comments.map((c) => (
+            <li key={c.id} className="comment-item">
+              {editingCommentId === c.id ? (
+                // ✅ Show form only for the comment being edited
+                <CommentForm
+                  onSubmit={(body) => handleUpdateComment(c.id, body)}
+                  initialValue={c.body}
+                  isEditing={true}
+                  isSubmitting={false}
+                  onCancel={() => setEditingCommentId(null)}
+                />
+              ) : (
+                <>
+                  <p>
+                    <strong>{c.user.username}</strong>: {c.body}
+                  </p>
+                  {(user?.id === c.user.id || user?.is_blog_admin) && (
+                    <div className="comment-actions">
+                      <button
+                        onClick={() => setEditingCommentId(c.id)}
+                        className="btn-edit"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteComment(c.id)}
+                        className="btn-delete"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
     </article>
   );

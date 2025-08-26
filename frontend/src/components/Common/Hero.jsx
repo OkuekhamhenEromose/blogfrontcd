@@ -1,6 +1,5 @@
-// Hero.jsx - Updated with blog1.jpeg background
 import "./Hero.css";
-import blogImage from "../../assets/istockphoto-814423752-612x612-removebg-preview.png"
+import blogImage from "../../assets/blog-post-image-guide.webp"
 
 const Hero = ({ 
   title, 
@@ -14,6 +13,7 @@ const Hero = ({
     background: `linear-gradient(135deg, rgba(0, 0, 0, ${overlayOpacity}), rgba(0, 0, 0, ${overlayOpacity})), url(${blogImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     backgroundAttachment: compact ? 'scroll' : 'fixed'
   };
 

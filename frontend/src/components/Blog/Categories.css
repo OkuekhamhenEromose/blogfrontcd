@@ -1,185 +1,213 @@
-/* Categories.css - Modern Design with Icons */
 .categories-section {
-  padding: 4rem 0;
-  background-color: #ffffff;
+  margin-bottom: 3rem;
 }
 
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+.container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-.category-card {
+.text-center {
+  text-align: center;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.max-w-600px {
+  max-width: 600px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-xs {
+  font-size: 1rem;
+  display: inline-block;
+  word-wrap: break-word;
+  width: 700px;
+  line-height: 1.6;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--dark-color);
+}
+
+.section-intro {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.5;
+}
+
+.categories-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.category-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: transparent;
+  color: var(--dark-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
-  padding: 2.5rem 1.5rem;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  border: 1px solid #f0f0f0;
-  position: relative;
-  overflow: hidden;
-}
-
-.category-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #E8B4E3, #D4C5A9, #A8D8EA, #C8D982);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.category-card:hover::before {
-  opacity: 1;
-}
-
-.category-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  border-color: #e0e0e0;
-}
-
-.category-link {
   text-decoration: none;
-  color: inherit;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: transform 0.35s ease-in-out, box-shadow 0.35s ease-in-out, color 0.25s ease-in-out;
+  cursor: pointer;
 }
-
+.category-item:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-20px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
 .category-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.category-card:hover .category-icon {
-  transform: scale(1.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
 }
 
 .category-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #2c3e50;
-  margin: 0 0 0.75rem 0;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: -0.02em;
-}
-
-.category-description {
-  font-size: 0.95rem;
-  color: #7f8c8d;
-  margin: 0;
-  line-height: 1.5;
-  font-weight: 400;
-  opacity: 0.8;
-}
-
-.category-card:hover .category-title {
-  color: #34495e;
-}
-
-.category-card:hover .category-description {
-  opacity: 1;
-  color: #5a6c7d;
-}
-
-/* No data message */
-.no-data {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem;
-  color: #7f8c8d;
+  font-weight: 600;
   font-size: 1.1rem;
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  border: 2px dashed #dee2e6;
+  margin-bottom: 0.25rem;
+  color: var(--primary-color);
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .categories-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .category-card {
-    padding: 2rem 1.25rem;
-  }
-  
-  .category-icon {
-    width: 70px;
-    height: 70px;
-  }
+.category-item:hover .category-title {
+  color: #00ff87;
 }
 
+.category-desc {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+.category-item:hover .category-desc {
+  color: #e2ddd6;
+}
+
+/* Button styles */
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.text-white {
+  color: white;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Loading and error states */
+.loading,
+.error,
+.no-data {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  margin: 2rem 0;
+}
+
+.error {
+  color: #e53e3e;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .categories-section {
-    padding: 3rem 0;
+  .categories-list {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem;
   }
-  
-  .categories-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.25rem;
-    padding: 0 0.75rem;
+
+  .category-item {
+    padding: 0.75rem;
   }
-  
-  .category-card {
-    padding: 1.75rem 1rem;
-  }
-  
-  .category-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 1.25rem;
-  }
-  
+
   .category-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
-  
-  .category-description {
-    font-size: 0.9rem;
+
+  .category-desc {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .categories-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 0 0.5rem;
+  .categories-list {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .category-card {
-    padding: 1.5rem 0.75rem;
-  }
-  
-  .category-icon {
-    width: 55px;
-    height: 55px;
-  }
-  
-  .category-title {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .category-description {
-    font-size: 0.85rem;
+
+  .category-item {
+    padding: 0.5rem;
   }
 }

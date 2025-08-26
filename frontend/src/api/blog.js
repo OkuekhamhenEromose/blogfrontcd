@@ -2,13 +2,23 @@ import api from "./axios";
 
 // --- Posts ---
 export const getPosts = async () => {
-  const res = await api.get("/posts/");
-  return Array.isArray(res.data) ? res.data : [];
+  try {
+    const res = await api.get("/posts/");
+    return Array.isArray(res.data) ? res.data : [];
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 };
 
 export const getPost = async (id) => {
-  const res = await api.get(`/posts/${id}/`);
-  return res.data;
+  try {
+    const res = await api.get(`/posts/${id}/`);
+    return res.data;
+  } catch (error) {
+    console.error(`Error fetching post ${id}:`, error);
+    throw error;
+  }
 };
 
 export const createPost = async (postData) => {
@@ -31,8 +41,13 @@ export const deletePost = async (id) => {
 
 // --- Categories ---
 export const getCategories = async () => {
-  const res = await api.get("/categories/");
-  return Array.isArray(res.data) ? res.data : [];
+  try {
+    const res = await api.get("/categories/");
+    return Array.isArray(res.data) ? res.data : [];
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return [];
+  }
 };
 
 export const getCategoryDetails = async (id) => {
@@ -42,7 +57,7 @@ export const getCategoryDetails = async (id) => {
 
 // --- Likes ---
 export const toggleLike = async (postId) => {
-  const res = await api.post(`/posts/${postId}/toggle-like/`);
+  const res = await api.post(`/posts/${postId}/like-toggle/`);
   return res.data;
 };
 

@@ -1,123 +1,294 @@
+/* BlogForm.css */
+.blog-form-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); */
+  background: var(--bg-primary);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 .blog-form-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background-color: var(--bg-primary);
 }
 
+.blog-form-card {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--bg-primary); 
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 680px;
+  padding: 3rem 1.5rem;
+  gap: 3rem;
+  /* align-items: center; */
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  /* Removed box-shadow and border to blend with background */
+}
+
+/* --- FORM SIDE --- */
+.form-section {
+  flex: 1;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary); /* Add subtle background to form area only */
+  border-radius: 20px;
+  margin-right: 20px; /* Add spacing between form and image */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+/* Rest of your CSS remains the same */
 .blog-form {
-  background: #fff;
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  flex: 1;
 }
 
-.blog-form h2 {
-  font-size: 1.6rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: 500;
+.form-row {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .form-group label {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #333;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
 }
 
-.form-group input[type="text"],
+.form-group input,
 .form-group select,
-.form-group textarea,
-.form-group input[type="file"] {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.form-group textarea {
+  padding: 0.9rem 1rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
   font-size: 1rem;
+  background: var(--input-bg);
+  color: var(--input-text);
   transition: all 0.3s ease;
 }
 
-.form-group textarea {
-  min-height: 180px;
-  resize: vertical;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: rgb(130, 106, 251);
-  box-shadow: 0 0 0 2px rgba(130, 106, 251, 0.2);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.15);
   outline: none;
 }
 
+textarea {
+  min-height: 180px;
+  resize: vertical;
+  line-height: 1.6;
+  font-family: inherit;
+}
+
 .checkbox-group {
-  display: flex;
+  flex-direction: row !important;
   align-items: center;
-  gap: 10px;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox-group input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .form-error {
-  color: red;
+  color: var(--danger-color);
   font-size: 0.85rem;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
+  font-weight: 500;
 }
 
-.has-error input,
-.has-error select,
-.has-error textarea {
-  border-color: red;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.btn-primary {
-  background: rgb(130, 106, 251);
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+/* --- FILE UPLOAD STYLING --- */
+.form-group input[type="file"] {
+  padding: 0.6rem;
   cursor: pointer;
-  transition: background 0.2s ease;
+  border: 1.5px dashed var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
 }
 
-.btn-primary:hover {
-  background: rgb(88, 56, 250);
+.form-group input[type="file"]:hover {
+  border-color: var(--accent-color);
+  background: var(--bg-tertiary);
 }
 
-.btn-primary:disabled {
-  background-color: #aaa;
+.form-group input[type="file"]::file-selector-button {
+  background: var(--accent-color);
+  color: var(--bg-primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+  background: var(--accent-hover);
+}
+
+/* --- SUBMIT BUTTON --- */
+.submit-btn {
+  margin-top: auto;
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  color: var(--bg-primary);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 6px 16px rgba(66, 153, 225, 0.3);
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(66, 153, 225, 0.4);
+}
+
+.submit-btn:disabled {
+  background: var(--text-muted);
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
+/* Spinner inside button */
 .spinner {
-  display: inline-block;
   width: 1rem;
   height: 1rem;
   border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: white;
+  border-top-color: var(--bg-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-right: 0.5rem;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- IMAGE SIDE --- */
+.contact-section {
+  flex: 0 0 42%;
+  background: url("../../assets/blog-post-image-guide.webp") center/cover no-repeat;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,32,44,0.4), rgba(26,32,44,0.2));
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .blog-form-card {
+    flex-direction: column;
+    max-width: 700px;
+  }
+
+  .form-section {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .contact-section {
+    order: -1;
+    min-height: 250px;
+    
+  }
+
+  .form-section {
+    padding: 2rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .blog-form {
+  .blog-form-container {
+    padding: 2rem 1rem;
+  }
+  
+  .form-section {
     padding: 1.5rem;
+  }
+  
+  .form-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-form-container {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .form-section {
+    padding: 1.25rem;
+  }
+  
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .submit-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
   }
 }

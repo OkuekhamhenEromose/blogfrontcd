@@ -63,13 +63,13 @@ const Home = () => {
         <div className="hero__overlay"></div>
 
         <div className="hero__social">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <Facebook size={20} />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <Instagram size={20} />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <Twitter size={20} />
           </a>
         </div>
@@ -90,19 +90,20 @@ const Home = () => {
         {slideImages.length > 0 && (
           <div className="hero__indicators">
             {slideImages.map((_, index) => (
-              <div
+              <button
                 key={index}
                 className={`indicator ${
                   currentSlide === index ? "indicator--active" : ""
                 }`}
                 onClick={() => setCurrentSlide(index)}
+                aria-label={`Go to slide ${index + 1}`}
               >
                 <img
                   src={slideImages[index].url}
                   alt={slideImages[index].title}
                   loading="lazy"
                 />
-              </div>
+              </button>
             ))}
           </div>
         )}

@@ -27,32 +27,62 @@ const Login = () => {
 
   return (
     <div className="wrapper">
-      <div className="container main">
+      <div className="main">
         <div className="row">
-          {/* Left Image Section */}
-          <div className="col side-image">
+          {/* Left Side - Image */}
+          <div className="side-image">
+            <div className="text">
+              <p>Welcome back <i>to our community</i></p>
+            </div>
           </div>
 
-          {/* Right Form Section */}
-          <div className="col right">
+          {/* Right Side - Form */}
+          <div className="right">
             <div className="input-box">
-              <header>Login</header>
-              {error && <div className="error-message">{error}</div>}
+              <header>Sign in</header>
+              
+              {error && (
+                <div className="error-message">
+                  {error}
+                </div>
+              )}
+              
               <form onSubmit={handleSubmit}>
+                {/* Username */}
                 <div className="input-field">
-                  <input type="text" name="username" className="input" required />
+                  <input
+                    type="text"
+                    name="username"
+                    className="input"
+                    required
+                  />
                   <label>Username</label>
                 </div>
+
+                {/* Password */}
                 <div className="input-field">
-                  <input type="password" name="password" className="input" required />
+                  <input
+                    type="password"
+                    name="password"
+                    className="input"
+                    required
+                  />
                   <label>Password</label>
                 </div>
+
+                {/* Submit Button */}
                 <div className="input-field">
-                  <input type="submit" className="submit" value="Login" />
+                  <input
+                    type="submit"
+                    className="submit"
+                    value="Sign in"
+                  />
                 </div>
+
+                {/* Register Link */}
                 <div className="signin">
-                  <span>
-                    Don&apos;t have an account? <a href="/register">Register</a>
+                  <span>Don't have an account?{" "}
+                    <a href="/register">Register</a>
                   </span>
                 </div>
               </form>

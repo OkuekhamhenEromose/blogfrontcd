@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User, Mail, Lock, UserCheck } from "lucide-react";
 import { register } from "../../api/auth";
 import "./Auth.css";
 
@@ -7,10 +8,16 @@ const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!agreedToTerms) {
+      setError("Please agree to the Terms of service");
+      return;
+    }
+    
     setIsSubmitting(true);
     setError("");
 
@@ -32,7 +39,9 @@ const Register = () => {
           }
           setError(errorMessages.join("\n"));
         } else {
-          setError(err.response.data.detail || "Registration failed. Please try again.");
+          setError(
+            err.response.data.detail || "Registration failed. Please try again."
+          );
         }
       } else if (err.request) {
         setError("No response from server. Please check your connection.");
@@ -48,48 +57,115 @@ const Register = () => {
     <div className="wrapper">
       <div className="container main">
         <div className="row">
-          {/* Left Image Section */}
-          <div className="col side-image">
+          {/* Left Side - Image */}
+          <div className="side-image">
+            <div className="text">
+              <p>Join our community <i>and start your journey</i></p>
+            </div>
           </div>
 
-          {/* Right Form Section */}
-          <div className="col right">
+          {/* Right Side - Form */}
+          <div className="right">
             <div className="input-box">
-              <header>Create Account</header>
-              {error && <div className="error-message">{error}</div>}
+              <header>Sign up</header>
+              
+              {error && (
+                <div className="error-message">
+                  {error}
+                </div>
+              )}
+              
               {success ? (
                 <div className="success-message">
                   Registration successful! Redirecting...
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
+                  {/* Full Name */}
                   <div className="input-field">
-                    <input type="text" name="full_name" className="input" required />
+                    <input
+                      type="text"
+                      name="full_name"
+                      className="input"
+                      required
+                    />
                     <label>Full Name</label>
                   </div>
+
+                  {/* Email */}
                   <div className="input-field">
-                    <input type="email" name="email" className="input" required />
+                    <input
+                      type="email"
+                      name="email"
+                      className="input"
+                      required
+                    />
                     <label>Email</label>
                   </div>
+
+                  {/* Username */}
                   <div className="input-field">
-                    <input type="text" name="username" className="input" required />
+                    <input
+                      type="text"
+                      name="username"
+                      className="input"
+                      required
+                    />
                     <label>Username</label>
                   </div>
+
+                  {/* Password */}
                   <div className="input-field">
-                    <input type="password" name="password" className="input" required />
+                    <input
+                      type="password"
+                      name="password"
+                      className="input"
+                      required
+                    />
                     <label>Password</label>
                   </div>
+
+                  {/* Role Selection */}
+                  <div className="input-field">
+                    <select name="role" className="input" required>
+                      <option value=""></option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                    <label>Role</label>
+                  </div>
+
+                  {/* Terms Checkbox */}
+                  <div style={{marginBottom: '20px', display: 'flex', alignItems: 'center'}}>
+                    <input
+                      type="checkbox"
+                      id="terms"
+                      checked={agreedToTerms}
+                      onChange={(e) => setAgreedToTerms(e.target.checked)}
+                      style={{marginRight: '10px'}}
+                    />
+                    <label htmlFor="terms" style={{fontSize: '0.9rem', color: '#666'}}>
+                      I agree to the{" "}
+                      <a href="#" style={{color: '#743ae1', textDecoration: 'none'}}>
+                        Terms of service
+                      </a>
+                    </label>
+                  </div>
+
+                  {/* Submit Button */}
                   <div className="input-field">
                     <input
                       type="submit"
                       className="submit"
-                      value={isSubmitting ? "Registering..." : "Sign Up"}
+                      value={isSubmitting ? "Registering..." : "Register"}
                       disabled={isSubmitting}
                     />
                   </div>
+
+                  {/* Login Link */}
                   <div className="signin">
-                    <span>
-                      Already have an account? <a href="/login">Log in here</a>
+                    <span>Already a member?{" "}
+                      <a href="/login">Sign in</a>
                     </span>
                   </div>
                 </form>

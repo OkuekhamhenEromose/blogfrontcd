@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createPost, updatePost, getPost } from "../../api/blog";
 import "./BlogForm.css";
 
+
 const BlogForm = ({ categories = [], onSubmit, initialData = {}, isSubmitting }) => {
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
@@ -55,126 +56,137 @@ const BlogForm = ({ categories = [], onSubmit, initialData = {}, isSubmitting })
     }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setErrors({});
-  if (!validateForm()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+    if (!validateForm()) return;
 
-  try {
-    const formDataToSend = new FormData();
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("content", formData.content);
-    formDataToSend.append("category_id", formData.category_id);
-    formDataToSend.append("published", formData.published);
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("content", formData.content);
+      formDataToSend.append("category_id", formData.category_id);
+      formDataToSend.append("published", formData.published);
 
-    if (formData.image) {
-      formDataToSend.append("image", formData.image);
+      if (formData.image) {
+        formDataToSend.append("image", formData.image);
+      }
+
+      if (id) {
+        await updatePost(id, formDataToSend);
+      } else {
+        await createPost(formDataToSend);
+      }
+
+      navigate("/blog");
+    } catch (err) {
+      console.error("Error saving post:", err.response?.data || err.message);
+      if (err.response?.data) {
+        setErrors(err.response.data);
+      }
     }
-
-    if (id) {
-      await updatePost(id, formDataToSend);
-    } else {
-      await createPost(formDataToSend);
-    }
-
-    navigate("/blog");
-  } catch (err) {
-    console.error("Error saving post:", err.response?.data || err.message);
-    if (err.response?.data) {
-      setErrors(err.response.data);
-    }
-  }
-};
-
+  };
 
   return (
-    <div className="blog-form-container">
-      <form className="blog-form" onSubmit={handleSubmit}>
-        <h2>{id ? "Edit Post" : "Create Post"}</h2>
+    <div className="blog-form-wrapper">
+        <div className="blog-form-card">
+          {/* Left side - Form */}
+          <div className="form-section">
+            <div className="form-header">
+              <h2>{id ? "Edit your blog post" : "Create a new blog post"}</h2>
+            </div>
 
-        <div className={`form-group ${errors.title ? "has-error" : ""}`}>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Enter a catchy title"
-            required
-          />
-          {errors.title && <div className="form-error">{errors.title}</div>}
-        </div>
+            <form className="blog-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className={`form-group ${errors.title ? "has-error" : ""}`}>
+                  <label>Title *</label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    placeholder="Your blog title"
+                    required
+                  />
+                  {errors.title && <div className="form-error">{errors.title}</div>}
+                </div>
 
-        <div className={`form-group ${errors.content ? "has-error" : ""}`}>
-          <label>Content</label>
-          <textarea
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            placeholder="Write your blog post..."
-            required
-          />
-          {errors.content && <div className="form-error">{errors.content}</div>}
-        </div>
+                <div className={`form-group ${errors.category_id ? "has-error" : ""}`}>
+                  <label>Category *</label>
+                  <select
+                    name="category_id"
+                    value={formData.category_id}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select category</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.category_id && (
+                    <div className="form-error">{errors.category_id}</div>
+                  )}
+                </div>
+              </div>
 
-        <div className={`form-group ${errors.category_id ? "has-error" : ""}`}>
-          <label>Category</label>
-          <select
-            name="category_id"
-            value={formData.category_id}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Select Category --</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-          {errors.category_id && (
-            <div className="form-error">{errors.category_id}</div>
-          )}
-        </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Featured Image</label>
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleChange}
+                  />
+                </div>
 
-        <div className="form-group checkbox-group">
-          <input
-            type="checkbox"
-            name="published"
-            checked={formData.published}
-            onChange={handleChange}
-          />
-          <label>Published</label>
-        </div>
+                <div className="form-group checkbox-group">
+                  <input
+                    type="checkbox"
+                    name="published"
+                    id="published"
+                    checked={formData.published}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="published">Publish immediately</label>
+                </div>
+              </div>
 
-        <div className="form-group">
-          <label>Image</label>
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleChange}
-          />
-        </div>
+              <div className={`form-group full-width ${errors.content ? "has-error" : ""}`}>
+                <label>Content *</label>
+                <textarea
+                  name="content"
+                  value={formData.content}
+                  onChange={handleChange}
+                  placeholder="Write your blog content here..."
+                  required
+                />
+                {errors.content && <div className="form-error">{errors.content}</div>}
+              </div>
 
-        <div className="form-actions">
-          <button
-            type="submit"
-            className="btn-primary"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <>
-                <span className="spinner"></span> Saving...
-              </>
-            ) : id ? (
-              "Update Post"
-            ) : (
-              "Create Post"
-            )}
-          </button>
+              <button
+                type="submit"
+                className="submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="spinner"></span> SAVING...
+                  </>
+                ) : (
+                  id ? "UPDATE POST" : "PUBLISH POST"
+                )}
+              </button>
+            </form>
+          </div>
+
+          {/* Right side - Background Image Only */}
+          <div className="contact-section">
+          </div>
         </div>
-      </form>
     </div>
   );
 };
