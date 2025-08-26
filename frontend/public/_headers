@@ -1,0 +1,14 @@
+/*
+  X-Content-Type-Options: nosniff
+
+/assets/*
+  Content-Type: application/javascript
+  Cache-Control: public, max-age=31536000
+
+/*.js
+  Content-Type: application/javascript
+  Cache-Control: public, max-age=31536000
+
+/*.mjs
+  Content-Type: application/javascript
+  Cache-Control: public, max-age=31536000

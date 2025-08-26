@@ -1,20 +1,22 @@
+// src/axios.js
 import axios from "axios";
 
-// axios.js
+// ✅ CORRECT: Base URL points to your Django API root
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/",
+  baseURL: 'https://blogbackc.onrender.com/api/', // This is correct
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
+// ... rest of your axios.js code remains the same
 api.interceptors.request.use(
   (config) => {
-    // Normalize the url we’re calling
+    // Normalize the url we're calling
     const base = config.baseURL || "";
     const url = new URL(config.url, base).toString();
 
     // ✅ Do NOT attach Authorization to login or token refresh
-    const skipAuth = url.endsWith("/login/") || url.endsWith("/token/refresh/");
+    const skipAuth = url.includes('/login/') || url.includes('/token/refresh/');
     if (!skipAuth) {
       const token = localStorage.getItem("access_token");
       if (token) {
@@ -26,7 +28,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-
 // Centralized refresh logic
 async function refreshToken() {
   const refresh = localStorage.getItem("refresh_token");
@@ -34,7 +35,7 @@ async function refreshToken() {
 
   try {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/"}token/refresh/`,
+      'https://blogbackc.onrender.com/api/token/refresh/', // ✅ Correct URL
       { refresh }
     );
     localStorage.setItem("access_token", data.access);

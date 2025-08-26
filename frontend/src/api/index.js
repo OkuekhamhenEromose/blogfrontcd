@@ -1,9 +1,7 @@
-const isProduction = import.meta.env.PROD;
-
-export const API_BASE_URL = isProduction 
-  ? 'https://blogbackc.onrender.com/api/blog/' 
-  : 'http://localhost:8000/api/blog/';
-
-export const FRONTEND_URL = isProduction
-  ? 'https://yourfrontend.netlify.app'
-  : 'http://localhost:5173';
+// src/index.js (or src/config.js)
+export const API_BASE_URL = 'https://blogbackc.onrender.com/api/';
+export const POSTS_URL = 'https://blogbackc.onrender.com/api/posts/';
+export const CATEGORIES_URL = 'https://blogbackc.onrender.com/api/categories/';
+export const LOGIN_URL = 'https://blogbackc.onrender.com/api/login/';
+export const REGISTER_URL = 'https://blogbackc.onrender.com/api/register/';
+export const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:5173';
