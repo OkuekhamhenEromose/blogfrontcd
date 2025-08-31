@@ -2,62 +2,47 @@
 .blog-form-wrapper {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  /* background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); */
-  background: var(--bg-primary);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-.blog-form-container {
-  flex: 1;
-  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
-  background-color: var(--bg-primary);
+  background: var(--bg-primary);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 2rem 1.5rem;
 }
 
 .blog-form-card {
   width: 100%;
-  max-width: 1100px;
-  background: var(--bg-primary); 
-  border-radius: 20px;
+  max-width: 1200px; /* Increased from 1000px to 1200px */
+  background: var(--bg-primary);
+  border-radius: 12px;
   overflow: hidden;
-  min-height: 680px;
-  padding: 3rem 1.5rem;
-  gap: 3rem;
-  /* align-items: center; */
+  min-height: 600px;
   display: flex;
-  justify-content: center;
-  flex: 1;
-  /* Removed box-shadow and border to blend with background */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* --- FORM SIDE --- */
 .form-section {
   flex: 1;
-  padding: 3rem 2.5rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  background: var(--bg-secondary); /* Add subtle background to form area only */
-  border-radius: 20px;
-  margin-right: 20px; /* Add spacing between form and image */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  margin-right: 20px;
 }
 
 .form-header h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 2rem;
+  text-align: center;
 }
 
-/* Rest of your CSS remains the same */
 .blog-form {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
   flex: 1;
 }
 
@@ -83,8 +68,8 @@
 .form-group select,
 .form-group textarea {
   padding: 0.9rem 1rem;
-  border: 1.5px solid var(--border-color);
-  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
   font-size: 1rem;
   background: var(--input-bg);
   color: var(--input-text);
@@ -101,7 +86,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.15);
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
   outline: none;
 }
 
@@ -116,7 +101,7 @@ textarea {
   flex-direction: row !important;
   align-items: center;
   gap: 0.6rem;
-  margin-top: 0.5rem;
+  margin-top: 1.8rem;
 }
 
 .checkbox-group input {
@@ -142,7 +127,7 @@ textarea {
 .form-group input[type="file"] {
   padding: 0.6rem;
   cursor: pointer;
-  border: 1.5px dashed var(--border-color);
+  border: 2px dashed var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-secondary);
 }
@@ -167,28 +152,50 @@ textarea {
   background: var(--accent-hover);
 }
 
-/* --- SUBMIT BUTTON --- */
-.submit-btn {
-  margin-top: auto;
-  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+/* Form buttons */
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.reset-btn {
+  background: var(--text-muted);
   color: var(--bg-primary);
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   border: none;
-  border-radius: 12px;
-  font-size: 1.05rem;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  align-self: center;
+}
+
+.reset-btn:hover {
+  background: var(--text-secondary);
+}
+
+/* --- SUBMIT BUTTON --- */
+.submit-btn {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  color: var(--bg-primary);
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  box-shadow: 0 6px 16px rgba(66, 153, 225, 0.3);
+  box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(66, 153, 225, 0.4);
+  box-shadow: 0 6px 15px rgba(66, 153, 225, 0.4);
 }
 
 .submit-btn:disabled {
@@ -210,12 +217,12 @@ textarea {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* --- IMAGE SIDE --- */
+/* --- IMAGE SIDE - WIDER --- */
 .contact-section {
-  flex: 0 0 42%;
+  flex: 0 0 50%; /* Increased from 42% to 50% */
   background: url("../../assets/blog-post-image-guide.webp") center/cover no-repeat;
   position: relative;
-  border-radius: 20px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -224,6 +231,11 @@ textarea {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(26,32,44,0.4), rgba(26,32,44,0.2));
+}
+
+/* Additional class for even wider image on larger screens */
+.wider-image {
+  flex: 0 0 55% !important; /* Even wider option */
 }
 
 /* --- RESPONSIVE --- */
@@ -241,7 +253,7 @@ textarea {
   .contact-section {
     order: -1;
     min-height: 250px;
-    
+    flex: 0 0 100% !important; /* Full width on smaller screens */
   }
 
   .form-section {
@@ -252,16 +264,11 @@ textarea {
     flex-direction: column;
     gap: 1rem;
   }
-
-  .submit-btn {
-    width: 100%;
-    justify-content: center;
-  }
 }
 
 @media (max-width: 768px) {
-  .blog-form-container {
-    padding: 2rem 1rem;
+  .blog-form-wrapper {
+    padding: 1.5rem 1rem;
   }
   
   .form-section {
@@ -269,14 +276,24 @@ textarea {
   }
   
   .form-header h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+  
+  .reset-btn,
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .blog-form-container {
-    padding: 1.5rem 0.75rem;
+  .blog-form-wrapper {
+    padding: 1rem 0.75rem;
   }
   
   .form-section {
@@ -284,11 +301,11 @@ textarea {
   }
   
   .form-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   
   .submit-btn {
-    padding: 0.875rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
   }
 }

@@ -1,28 +1,18 @@
 [build]
-  command = "npm run build"
   publish = "dist"
+  command = "npm run build"
 
-# Force correct MIME types for JavaScript files
-[[headers]]
-  for = "/assets/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-    X-Content-Type-Options = "nosniff"
+[build.environment]
+  NODE_VERSION = "18"
 
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-    X-Content-Type-Options = "nosniff"
-
-[[headers]]
-  for = "/*.mjs"
-  [headers.values]
-    Content-Type = "application/javascript"
-    X-Content-Type-Options = "nosniff"
-
-# Single page app redirect - important!
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# API proxy for development (optional)
+[[redirects]]
+  from = "/api/*"
+  to = "https://blogbackc.onrender.com/api/:splat"
+  status = 200
+  force = true

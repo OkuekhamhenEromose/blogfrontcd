@@ -5,17 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./RecentPosts.css";
-
-const getCorrectImageUrl = (imageUrl) => {
-  if (!imageUrl) return null;
-  if (imageUrl.endsWith(".txt") || !imageUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-    return null;
-  }
-  return imageUrl.replace(
-    "ch-blog-media.s3.eu-north-1.amazonaws.com",
-    "blogbackc.s3.eu-north-1.amazonaws.com"
-  );
-};
+import { getImageUrl } from '../../api/config.js'
 
 // Custom arrows
 const CustomPrevArrow = ({ onClick }) => (
@@ -67,7 +57,7 @@ const RecentPosts = ({ posts }) => {
             <div className="recent-post-card">
               {post.image ? (
                 <img
-                  src={getCorrectImageUrl(post.image)}
+                  src={getImageUrl(post.image)}
                   alt={post.title || "Blog post"}
                   className="recent-post-image"
                   onError={(e) => (e.target.style.display = "none")}

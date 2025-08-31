@@ -4,12 +4,13 @@ import {
 } from "lucide-react";
 import "./Categories.css";
 import { useState, useEffect } from "react";
+import { getCategories } from "../../api/blog";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const Categories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Categories = ({ categories: propCategories = [] }) => {
+  const [categories, setCategories] = useState(propCategories);
+  const [loading, setLoading] = useState(!propCategories.length);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -21,24 +22,24 @@ const Categories = () => {
       mirror: false
     });
 
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch categories');
+    // Only fetch if parent did not provide categories
+    if (!propCategories.length) {
+      const fetchCategories = async () => {
+        try {
+          const data = await getCategories();
+          console.log("Categories data:", data);
+          setCategories(data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
         }
-        const data = await response.json();
-        console.log("Categories data:", data);
-        setCategories(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+      };
+      fetchCategories();
+    } else {
+      setLoading(false);
+    }
+  }, [propCategories]);
 
   const getCategoryData = (categoryName) => {
     const name = categoryName.toLowerCase();
@@ -94,7 +95,7 @@ const Categories = () => {
             Categories
           </h1>
           <p data-aos="fade-up" className="text-xs text-gray-400">
-            Discover stories from every corner of life. From technology and travel to culture and sports — 
+            Discover stories from every corner of life. From technology and travel to culture and sports —
             explore the topics that inspire, inform, and entertain.
           </p>
         </div>
@@ -123,7 +124,6 @@ const Categories = () => {
             );
           })}
         </div>
-
       </div>
     </section>
   );

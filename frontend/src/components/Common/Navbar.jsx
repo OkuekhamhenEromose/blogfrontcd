@@ -1,22 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Moon, 
   Sun, 
   FileText, 
   FileEdit, 
   LogIn, 
-  UserPlus, 
+  UserPlus,
   LogOut 
 } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = ({ user, logout, theme, toggleTheme }) => {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="nav-logo">
-          <span className="logo-icon">📝</span>
-          BlogHub
+          CHBlog
         </Link>
         
         <ul className="nav-menu">
@@ -44,12 +45,19 @@ const Navbar = ({ user, logout, theme, toggleTheme }) => {
           
           {user ? (
             <>
-              <li className="nav-item">
-                <Link to="/blog/create" className="nav-link">
-                  <FileEdit size={18} className="nav-icon" />
-                  <span>Create Post</span>
-                </Link>
-              </li>
+              {/* Only show Create Post if user is admin */}
+              {(user?.is_blog_admin || user?.role === "admin") && (
+                <li className="nav-item">
+                  <button
+                    className="nav-link nav-create-btn"
+                    onClick={() => navigate("/blog/create")}
+                  >
+                    <FileEdit size={18} className="nav-icon" />
+                    <span>Create Post</span>
+                  </button>
+                </li>
+              )}
+
               <li className="nav-item">
                 <span className="nav-user">
                   <span className="user-greeting">Hello,</span>

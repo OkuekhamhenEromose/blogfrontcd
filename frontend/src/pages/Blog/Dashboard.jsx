@@ -39,7 +39,7 @@ const BlogDashboard = () => {
   if (loading) {
     return (
       <div className="dashboard-loading">
-        <p>Loading dashboard...</p>
+        <div className="loading-spinner"></div>
       </div>
     );
   }
@@ -58,17 +58,17 @@ const BlogDashboard = () => {
       </Hero>
 
       {/* Categories Section */}
-      <section 
-        id="categories" 
+      <section
+        id="categories"
         className="dashboard-section"
         data-aos="fade-up"
         data-aos-delay="100"
       >
-        <Categories categories={categories} />
+        <Categories categories={categories} loading={loading} />
       </section>
 
       {/* Recent Posts Slider */}
-      <section 
+      <section
         className="dashboard-section"
         data-aos="fade-up"
         data-aos-delay="150"
@@ -80,7 +80,7 @@ const BlogDashboard = () => {
       </section>
 
       {/* All Blog Posts Grid */}
-      <section 
+      <section
         className="dashboard-section"
         data-aos="fade-up"
         data-aos-delay="200"
@@ -102,17 +102,17 @@ const BlogDashboard = () => {
 
         <div className="posts-grid">
           {(showAll ? posts : posts.slice(0, 6)).map((post, index) => (
-            <BlogCard 
-              key={post.id} 
-              post={post} 
+            <BlogCard
+              key={post.id}
+              post={post}
               data-aos="fade-up"
-              data-aos-delay={300 + (index * 50)}
+              data-aos-delay={300 + index * 50}
             />
           ))}
         </div>
 
         {posts.length > 6 && (
-          <div 
+          <div
             className="show-more"
             data-aos="fade-up"
             data-aos-delay="400"

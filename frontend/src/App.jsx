@@ -17,7 +17,7 @@ import BlogDashboard from "./pages/Blog/Dashboard";
 import BlogForm from "./components/Blog/BlogForm";
 import AllPosts from "./components/Blog/AllPosts";
 import SinglePost from "./pages/Blog/SinglePost";
-import ManagePost from "./pages/Blog/ManagePost";
+// import ManagePost from "./pages/Blog/ManagePost";
 import CategoryDetail from "./pages/Blog/CategoryDetail";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import EditPost from "./pages/EditPost";
@@ -208,7 +208,7 @@ function App() {
               </Layout>
             }
           />
-          <Route
+          {/* <Route
             path="/blog/:id/manage"
             element={
               <Layout>
@@ -217,7 +217,7 @@ function App() {
                 </PrivateRoute>
               </Layout>
             }
-          />
+          /> */}
           <Route
             path="/categories/:id"
             element={

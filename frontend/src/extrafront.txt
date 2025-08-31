@@ -1,11 +1,13 @@
-/* :root {
+
+INDEX.CSS
+:root {
   --primary-color: #3498db;
   --secondary-color: #2ecc71;
   --dark-color: #2c3e50;
   --light-color: #ecf0f1;
   --danger-color: #e74c3c;
   --success-color: #27ae60;
-  
+
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-tertiary: #e9ecef;
@@ -45,55 +47,46 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
-
-html {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  overflow-y: auto; 
-}
-
-body {
-  background-color: var(--bg-primary);
-  overflow-x: hidden;
-  overflow-y: auto; 
-  height: auto; 
-  min-height: 100vh;
-  padding-top: 0;
-}
-
+/* REMOVE overflow: hidden from these selectors */
+html,
+body,
 #root {
-  height: auto; 
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  /* REMOVE: overflow: hidden; */
+  overflow-x: hidden; /* Keep only horizontal hiding */
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 
+/* Ensure home container doesn't prevent scrolling */
 .home-container {
   width: 100%;
-  height: auto; 
-  min-height: 100vh;
+  min-height: 100%;
   overflow-x: hidden;
-  overflow-y: visible; 
   position: relative;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  /* REMOVE any overflow: hidden if present */
+  overflow: visible; /* Allow content to flow */
 }
-
 .home-container .navbar {
-  position: sticky; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  background: var(--bg-secondary);
+  background: rgba(44, 62, 80, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   box-shadow: 0 2px 10px var(--shadow);
-  border-bottom: 1px solid var(--border-color);
 }
 
 .navbar .container {
@@ -101,8 +94,6 @@ body {
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
 }
 
 .logo {
@@ -152,7 +143,6 @@ body {
   color: var(--bg-primary);
   transform: scale(1.1);
 }
-
 .app-container:not(.home-page) .main-content {
   padding: 20px 0;
   margin-top: 0;
@@ -161,14 +151,14 @@ body {
 .home-container .main-content {
   padding: 0;
   margin: 0;
-  height: auto; 
-  min-height: auto; 
+  height: auto;
+  min-height: auto;
 }
 
 .container {
   max-width: 100%;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  margin: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -280,24 +270,24 @@ footer {
     gap: 10px;
     padding: 15px 1rem;
   }
-  
+
   .nav-links {
     margin-top: 10px;
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
   }
-  
+
   .home-container .navbar {
-    position: sticky;
-    background: var(--bg-secondary);
-    backdrop-filter: blur(10px);
+    position: relative;
+    background: var(--dark-color);
+    backdrop-filter: none;
   }
-  
+
   .logo {
     font-size: 20px;
   }
-  
+
   .nav-link {
     padding: 6px 12px;
     font-size: 14px;
@@ -307,10 +297,10 @@ footer {
     height: auto;
     overflow-y: auto;
   }
-  
+
   .home-container {
-    height: auto;
-    overflow-y: visible;
+    min-height: 100vh;
+    overflow: hidden;
   }
 }
 
@@ -318,12 +308,12 @@ footer {
   .container {
     padding: 0 0.75rem;
   }
-  
+
   .btn {
     padding: 10px 20px;
     font-size: 14px;
   }
-  
+
   .navbar .container {
     padding: 12px 0.75rem;
   }
@@ -333,7 +323,7 @@ footer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  height: auto; 
+  height: auto;
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
@@ -373,4 +363,4 @@ footer {
 
 .admin-posts {
   margin-top: 30px;
-} */
+}

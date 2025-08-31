@@ -19,7 +19,7 @@ const Hero = ({
 
   return (
     <section 
-      className={`hero ${compact ? 'hero-compact' : ''} hero-with-bg`}
+      className={`herod ${compact ? 'hero-compact' : ''} hero-with-bg`}
       style={heroStyle}
     >
       <div className="hero-content">

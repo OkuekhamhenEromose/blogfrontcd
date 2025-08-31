@@ -102,6 +102,7 @@
 
   display: -webkit-box;
   -webkit-line-clamp: 2;   /* ✅ show max 2 lines */
+  line-clamp: 2;           /* Standard property for compatibility */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -128,6 +129,7 @@
 
   display: -webkit-box;
   -webkit-line-clamp: 3;   /* ✅ show max 3 lines */
+  line-clamp: 3;           /* Standard property for compatibility */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -4,6 +4,7 @@ import "./BlogCard.css";
 import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { getImageUrl } from '../../api/config.js';
 
 const BlogCard = ({ post, admin = false }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -18,33 +19,8 @@ const BlogCard = ({ post, admin = false }) => {
     });
   }, []);
 
-  // Handle image URL
-  const getImageUrl = (imagePath) => {
-    if (!imagePath) return null;
-    // Check if it's a text file or invalid image
-    if (
-      imagePath.endsWith(".txt") ||
-      !imagePath.match(/\.(jpg|jpeg|png|gif|webp)$/i)
-    ) {
-      return null;
-    }
-    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-      return imagePath;
-    }
-    if (imagePath.includes('s3.eu-north-1.amazonaws.com')) {
-      return imagePath;
-    }
-
-    if (imagePath.startsWith("/media/")) {
-      return `${
-        process.env.REACT_APP_API_URL || "http://localhost:8000"
-      }${imagePath}`;
-    }
-
-    return `${
-      process.env.REACT_APP_API_URL || "http://localhost:8000"
-    }/media/${imagePath}`;
-  };
+  // Handle image URL - FIXED for Vite
+  const imageUrl = getImageUrl(post.image)
 
   // Strip HTML + create excerpt
   const contentExcerpt = post.content
@@ -62,7 +38,7 @@ const BlogCard = ({ post, admin = false }) => {
       {post.image && (
         <div className="blog-card-image-container">
           <img
-            src={getImageUrl(post.image)}
+            src={imageUrl}
             alt={post.title || "Blog post image"}
             className="blog-card-image"
             onError={(e) => {

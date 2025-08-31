@@ -1,4 +1,4 @@
-.hero {
+.herod {
   position: relative;
   height: calc(100vh - 70px);
   min-height: 530px;
@@ -14,13 +14,12 @@
   right: 0;
 }
 
-/* Compact hero for dashboard */
 .hero-compact {
-  height: 55vh;
+  height: 50vh;
   min-height: 400px;
   max-height: 600px;
-  background-attachment: scroll; /* Better for mobile */
-  margin-top: 70px;
+  background-attachment: scroll; 
+  /* margin-top: ; */
 }
 
 .hero-content {
@@ -75,13 +74,13 @@
 }
 
 .hero-btn {
-  background-color: #d4af37; /* Gold color for fashion */
+  background-color: #d4af37; 
   color: white;
   border: none;
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 0; /* Square edges for modern look */
+  border-radius: 0; 
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -102,7 +101,6 @@
   font-size: 1rem;
 }
 
-/* Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -114,7 +112,6 @@
   }
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .hero-title {
     font-size: 3rem;
@@ -133,7 +130,7 @@
   .hero {
     min-height: 500px;
     background-attachment: scroll;
-    margin-left: 0; /* Reset on mobile */
+    margin-left: 0; 
   }
     
   .hero-compact {

@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createPost, updatePost, getPost } from "../../api/blog";
 import "./BlogForm.css";
 
-
 const BlogForm = ({ categories = [], onSubmit, initialData = {}, isSubmitting }) => {
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
@@ -89,72 +88,79 @@ const BlogForm = ({ categories = [], onSubmit, initialData = {}, isSubmitting })
 
   return (
     <div className="blog-form-wrapper">
-        <div className="blog-form-card">
-          {/* Left side - Form */}
-          <div className="form-section">
-            <div className="form-header">
-              <h2>{id ? "Edit your blog post" : "Create a new blog post"}</h2>
+      <div className="blog-form-card">
+        {/* Form Section */}
+        <div className="form-section">
+          <div className="form-header">
+            <h2>{id ? "Edit your blog post" : "Create a new blog post"}</h2>
+          </div>
+
+          <form className="blog-form" onSubmit={handleSubmit}>
+            {/* Title Field */}
+            <div className="form-row">
+              <div className={`form-group ${errors.title ? "has-error" : ""}`}>
+                <label>Title *</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="Your blog title"
+                  required
+                />
+                {errors.title && <div className="form-error">{errors.title}</div>}
+              </div>
             </div>
 
-            <form className="blog-form" onSubmit={handleSubmit}>
-              <div className="form-row">
-                <div className={`form-group ${errors.title ? "has-error" : ""}`}>
-                  <label>Title *</label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    placeholder="Your blog title"
-                    required
-                  />
-                  {errors.title && <div className="form-error">{errors.title}</div>}
-                </div>
+            {/* Category Field */}
+            <div className="form-row">
+              <div className={`form-group ${errors.category_id ? "has-error" : ""}`}>
+                <label>Category *</label>
+                <select
+                  name="category_id"
+                  value={formData.category_id}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select category</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.category_id && (
+                  <div className="form-error">{errors.category_id}</div>
+                )}
+              </div>
+            </div>
 
-                <div className={`form-group ${errors.category_id ? "has-error" : ""}`}>
-                  <label>Category *</label>
-                  <select
-                    name="category_id"
-                    value={formData.category_id}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select category</option>
-                    {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.category_id && (
-                    <div className="form-error">{errors.category_id}</div>
-                  )}
-                </div>
+            {/* Image Upload and Publish Checkbox */}
+            <div className="form-row">
+              <div className="form-group">
+                <label>Featured Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                />
               </div>
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Featured Image</label>
-                  <input
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="form-group checkbox-group">
-                  <input
-                    type="checkbox"
-                    name="published"
-                    id="published"
-                    checked={formData.published}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="published">Publish immediately</label>
-                </div>
+              <div className="form-group checkbox-group">
+                <input
+                  type="checkbox"
+                  name="published"
+                  id="published"
+                  checked={formData.published}
+                  onChange={handleChange}
+                />
+                <label htmlFor="published">Publish immediately</label>
               </div>
+            </div>
 
+            {/* Content Field */}
+            <div className="form-row">
               <div className={`form-group full-width ${errors.content ? "has-error" : ""}`}>
                 <label>Content *</label>
                 <textarea
@@ -166,7 +172,13 @@ const BlogForm = ({ categories = [], onSubmit, initialData = {}, isSubmitting })
                 />
                 {errors.content && <div className="form-error">{errors.content}</div>}
               </div>
+            </div>
 
+            {/* Buttons */}
+            <div className="form-buttons">
+              <button type="button" className="reset-btn">
+                Reset All
+              </button>
               <button
                 type="submit"
                 className="submit-btn"
@@ -180,13 +192,14 @@ const BlogForm = ({ categories = [], onSubmit, initialData = {}, isSubmitting })
                   id ? "UPDATE POST" : "PUBLISH POST"
                 )}
               </button>
-            </form>
-          </div>
-
-          {/* Right side - Background Image Only */}
-          <div className="contact-section">
-          </div>
+            </div>
+          </form>
         </div>
+
+        {/* Right side - Background Image Only - WIDER */}
+        <div className="contact-section wider-image">
+        </div>
+      </div>
     </div>
   );
 };
