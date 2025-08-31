@@ -120,6 +120,7 @@ const Categories = ({ categories: propCategories = [] }) => {
                 </div>
                 <span className="category-title">{title}</span>
                 <p className="category-desc">{data.description}</p>
+                <div className="category-hover-effect"></div>
               </Link>
             );
           })}

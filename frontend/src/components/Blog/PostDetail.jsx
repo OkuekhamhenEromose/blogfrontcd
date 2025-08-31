@@ -81,7 +81,7 @@ const PostDetail = ({ post, onLike }) => {
   };
 
   const handleDeleteComment = async (id) => {
-    if (window.confirm("Delete this comment?")) {
+    if (window.confirm("Are you sure you want to delete this comment?")) {
       try {
         await deleteComment(id);
         await loadComments();
@@ -89,6 +89,10 @@ const PostDetail = ({ post, onLike }) => {
         console.error("Failed to delete comment:", err);
       }
     }
+  };
+
+  const handleEditComment = (comment) => {
+    setEditingCommentId(comment.id);
   };
 
   // If we're loading the main post content, show full page spinner
@@ -223,25 +227,13 @@ const PostDetail = ({ post, onLike }) => {
                   />
                 </div>
               ) : (
-                <div key={comment.id} className="comment-wrapper">
-                  <Comment comment={comment} />
-                  {(user?.id === comment.user.id || user?.is_blog_admin) && (
-                    <div className="comment-actions">
-                      <button
-                        onClick={() => setEditingCommentId(comment.id)}
-                        className="btn-edit"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDeleteComment(comment.id)}
-                        className="btn-delete"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </div>
+                <Comment 
+                  key={comment.id} 
+                  comment={comment} 
+                  currentUser={user}
+                  onEdit={handleEditComment}
+                  onDelete={handleDeleteComment}
+                />
               )
             ))
           )}

@@ -90,7 +90,7 @@ const BlogDashboard = () => {
 
           {user && (user?.is_blog_admin || user?.role === "admin") && (
             <button
-              className="btn btn-primary create-post-btn"
+              className="create-post-btn"
               onClick={() => navigate("/blog/create")}
               data-aos="zoom-in"
               data-aos-delay="250"
@@ -118,7 +118,7 @@ const BlogDashboard = () => {
             data-aos-delay="400"
           >
             <button
-              className="btn btn-secondary"
+              className="view-all-btn"
               onClick={() => setShowAll(!showAll)}
             >
               {showAll ? "Show Less" : "View All Posts →"}

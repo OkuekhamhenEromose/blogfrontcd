@@ -49,7 +49,7 @@ const Navbar = ({ user, logout, theme, toggleTheme }) => {
               {(user?.is_blog_admin || user?.role === "admin") && (
                 <li className="nav-item">
                   <button
-                    className="nav-link nav-create-btn"
+                    className="nav-create-btn"
                     onClick={() => navigate("/blog/create")}
                   >
                     <FileEdit size={18} className="nav-icon" />
@@ -80,7 +80,7 @@ const Navbar = ({ user, logout, theme, toggleTheme }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/register" className="nav-link nav-register">
+                <Link to="/register" className="nav-register">
                   <UserPlus size={18} className="nav-icon" />
                   <span>Register</span>
                 </Link>
