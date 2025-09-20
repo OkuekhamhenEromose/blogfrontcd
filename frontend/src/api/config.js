@@ -7,7 +7,7 @@ export const API_BASE_URL =
 export const API_DOMAIN = API_BASE_URL.replace("/api/", ""); // For media/image URLs
 
 export const FRONTEND_URL =
-  import.meta.env.VITE_FRONTEND_URL || "https://splendorous-custard-21ddd9.netlify.app";
+  import.meta.env.VITE_FRONTEND_URL || "https://subtle-blini-446f27.netlify.app";
 // --- Endpoints ---
 export const POSTS_URL = `${API_BASE_URL}posts/`;
 export const CATEGORIES_URL = `${API_BASE_URL}categories/`;
