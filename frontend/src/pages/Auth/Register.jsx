@@ -17,7 +17,7 @@ const Register = () => {
       setError("Please agree to the Terms of service");
       return;
     }
-    
+
     setIsSubmitting(true);
     setError("");
 
@@ -60,7 +60,9 @@ const Register = () => {
           {/* Left Side - Image */}
           <div className="side-image">
             <div className="text">
-              <p>Join our community <i>and start your journey</i></p>
+              <p>
+                Join our community <i>and start your journey</i>
+              </p>
             </div>
           </div>
 
@@ -68,13 +70,9 @@ const Register = () => {
           <div className="right">
             <div className="input-box">
               <header>Sign up</header>
-              
-              {error && (
-                <div className="error-message">
-                  {error}
-                </div>
-              )}
-              
+
+              {error && <div className="error-message">{error}</div>}
+
               {success ? (
                 <div className="success-message">
                   Registration successful! Redirecting...
@@ -85,11 +83,22 @@ const Register = () => {
                   <div className="input-field">
                     <input
                       type="text"
-                      name="full_name"
+                      name="first_name"
                       className="input"
                       required
                     />
-                    <label>Full Name</label>
+                    <label>First Name</label>
+                  </div>
+
+                  {/* Last Name */}
+                  <div className="input-field">
+                    <input
+                      type="text"
+                      name="last_name"
+                      className="input"
+                      required
+                    />
+                    <label>Last Name</label>
                   </div>
 
                   {/* Email */}
@@ -136,17 +145,29 @@ const Register = () => {
                   </div>
 
                   {/* Terms Checkbox */}
-                  <div style={{marginBottom: '20px', display: 'flex', alignItems: 'center'}}>
+                  <div
+                    style={{
+                      marginBottom: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     <input
                       type="checkbox"
                       id="terms"
                       checked={agreedToTerms}
                       onChange={(e) => setAgreedToTerms(e.target.checked)}
-                      style={{marginRight: '10px'}}
+                      style={{ marginRight: "10px" }}
                     />
-                    <label htmlFor="terms" style={{fontSize: '0.9rem', color: '#666'}}>
+                    <label
+                      htmlFor="terms"
+                      style={{ fontSize: "0.9rem", color: "#666" }}
+                    >
                       I agree to the{" "}
-                      <a href="#" style={{color: '#743ae1', textDecoration: 'none'}}>
+                      <a
+                        href="#"
+                        style={{ color: "#743ae1", textDecoration: "none" }}
+                      >
                         Terms of service
                       </a>
                     </label>
@@ -164,8 +185,8 @@ const Register = () => {
 
                   {/* Login Link */}
                   <div className="signin">
-                    <span>Already a member?{" "}
-                      <a href="/login">Sign in</a>
+                    <span>
+                      Already a member? <a href="/login">Sign in</a>
                     </span>
                   </div>
                 </form>
